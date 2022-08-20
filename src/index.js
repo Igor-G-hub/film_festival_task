@@ -1,10 +1,17 @@
-import React from 'react';
-import ReactDOM from 'react-dom/client';
-import './index.css';
-import App from './App';
-import reportWebVitals from './reportWebVitals';
+import React from "react";
+import ReactDOM from "react-dom/client";
+import "./index.css";
+import App from "./App";
+import reportWebVitals from "./reportWebVitals";
+import { setupWorker } from "msw";
 
-const root = ReactDOM.createRoot(document.getElementById('root'));
+if (process.env.REACT_APP_USE_MOCKING_API === "true") {
+  const { handlers } = require("./mocks/handlers");
+  const worker = setupWorker(...handlers);
+  worker.start();
+}
+
+const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
   <React.StrictMode>
     <App />
