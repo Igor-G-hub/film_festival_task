@@ -36,7 +36,7 @@ export const ContentContainer = styled.div`
   border: ${({ theme }) => `1px solid ${theme.colors.lightGrey}`};
   background: ${({ theme }) => theme.colors.light}};
   box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 12px;
-  z-index: 50;
+  z-index: 50; 
 
   @media ${screenSizes.desktop} {
     width: 582px;
