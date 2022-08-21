@@ -19,7 +19,6 @@ export const handlers = [
       const isValidate = checkApiRequestValidation("POST", req);
       if (isValidate) {
         const { answers } = req.body?.data?.attributes;
-
         return res(
           ctx.status(201),
           ctx.json({
