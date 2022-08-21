@@ -12,6 +12,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import {
   setAnswersData,
+  setError,
   setIsSucceed,
 } from "modules/film_festival_quest_and_answers/redux";
 import { routes } from "modules/main/routes";
@@ -21,13 +22,19 @@ export const IndexPage = () => {
   let navigate = useNavigate();
   const [surveyData, setSurveyData] = useState(null);
   const [collectionOfAnswers, setCollectionOfAnswers] = useState([]);
+  const questions = surveyData?.attributes?.questions;
 
   useEffect(() => {
+    dispatch(setError("Provjera svega"));
     getSurvey();
   }, []);
 
   const getSurvey = async () => {
     const result = await fetchData(URLS.getSurvey, "GET");
+    if (!result);
+    if (result.errors);
+    // set errorMessage;
+
     setSurveyData(result.data);
   };
 
@@ -49,11 +56,16 @@ export const IndexPage = () => {
     };
     const result = await fetchData(url, "POST", payload);
     if (!result) return;
-    console.log("result", result);
     handleAfterSubmit(result);
   };
 
   const handleAfterSubmit = (result) => {
+    result.data.attributes.answers.forEach((answer) => {
+      const findAnswer = questions.find(
+        (question) => question.questionId === answer.questionId
+      );
+      answer.question = findAnswer.label;
+    });
     dispatch(setAnswersData(result));
     dispatch(setIsSucceed(true));
     navigate(routes.success);
@@ -74,7 +86,7 @@ export const IndexPage = () => {
   };
 
   return (
-    surveyData && (
+    questions && (
       <>
         <FlexContainer variant="colored">
           <Title title={surveyData.attributes.title} />
@@ -85,7 +97,7 @@ export const IndexPage = () => {
           />
         </FlexContainer>
         <form onSubmit={(e) => onSubmit(e)}>
-          {surveyData.attributes.questions.map((question) => {
+          {questions.map((question) => {
             return question.questionType === "rating" ? (
               <FlexContainer key={question.label}>
                 <FormRadioGroup

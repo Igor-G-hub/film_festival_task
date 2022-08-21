@@ -9,11 +9,14 @@ export const FlexContainer = ({
   justifyContent,
   width,
   margin,
+  marginFirstOfType,
   ...otherProps
 }) => {
   return (
     <FlexContainerStyled
       width={width}
+      margin={margin}
+      marginFirstOfType={marginFirstOfType}
       flexDirection={flexDirection}
       {...otherProps}
     >
@@ -31,4 +34,6 @@ FlexContainer.propTypes = {
   alignItems: PropTypes.string,
   justifyContent: PropTypes.string,
   width: PropTypes.string,
+  margin: PropTypes.string,
+  marginFirstOfType: PropTypes.string,
 };
