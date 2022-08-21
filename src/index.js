@@ -4,8 +4,10 @@ import "./index.css";
 import App from "./App";
 import reportWebVitals from "./reportWebVitals";
 import { setupWorker } from "msw";
+import { store } from "./redux/store";
+import { Provider } from "react-redux";
 
-if (process.env.REACT_APP_USE_MOCKING_API === "true") {
+if (process.env.REACT_APP_API_TYPE === "mockingApi") {
   const { handlers } = require("./mocks/handlers");
   const worker = setupWorker(...handlers);
   worker.start();
@@ -14,7 +16,9 @@ if (process.env.REACT_APP_USE_MOCKING_API === "true") {
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
   <React.StrictMode>
-    <App />
+    <Provider store={store}>
+      <App />
+    </Provider>
   </React.StrictMode>
 );
 
