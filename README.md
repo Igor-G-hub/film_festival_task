@@ -29,30 +29,4 @@ open http://localhost:3000 to view it in your browser
 
 Folder structure of project:
 
-Film festival app
-│
-│
-├── src
-│ ├── mocks
-│ │ └── handlers
-│ │ └── mockingResponses
-│ │
-│ └── modules  
- │ │ └── film_festival_quest_and_answers  
- │ │ ├── components
-│ │ └── fragments
-│ ├── main └── controls
-│ │ └── routes └── redux  
- │ │ └── api
-│ │
-│ ├── redux
-│ ├── shared
-│ ├── App.js
-│ ├── index.js
-│
-├── .env
-│  
- ├── package.json
-├── .eslintrc.json
-├── yarn.lock
-└── README.md
+![image](https://user-images.githubusercontent.com/77465794/186028275-49dd4e42-56a6-4945-bc47-37108c303dfc.png)
