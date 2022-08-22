@@ -4,6 +4,7 @@ import { ThemeProvider } from "styled-components";
 import { theme } from "shared/theme";
 import { useSelector } from "react-redux";
 import {
+  Error,
   IndexPage,
   isSucceedSelector,
   SuccessPage,
@@ -16,6 +17,7 @@ const App = () => {
   const isSucceed = useSelector(isSucceedSelector);
   return (
     <ThemeProvider theme={theme}>
+      <Error />
       <Router>
         <AppWrapper>
           <Routes>

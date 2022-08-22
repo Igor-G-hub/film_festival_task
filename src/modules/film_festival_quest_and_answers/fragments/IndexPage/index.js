@@ -1,6 +1,5 @@
 import ReactHtmlParser from "react-html-parser";
 import { fetchData, URLS } from "modules/film_festival_quest_and_answers/api";
-import PropTypes from "prop-types";
 import React, { useEffect, useState } from "react";
 import { Description } from "shared/ui/Description/Description";
 import { FlexContainer } from "shared/ui/FlexContainer/FlexContainer";
@@ -8,7 +7,7 @@ import { Title } from "shared/ui/Title/Title";
 import { FormInput } from "shared/ui/FormInput/Input";
 import { FormRadioGroup } from "shared/ui/FormRadioGroup/FormRadioGroup";
 import { ActionButton } from "shared/ui/ActionButton/ActionButton";
-import { useSelector, useDispatch } from "react-redux";
+import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import {
   setAnswersData,
@@ -25,16 +24,13 @@ export const IndexPage = () => {
   const questions = surveyData?.attributes?.questions;
 
   useEffect(() => {
-    dispatch(setError("Provjera svega"));
     getSurvey();
   }, []);
 
   const getSurvey = async () => {
     const result = await fetchData(URLS.getSurvey, "GET");
-    if (!result);
-    if (result.errors);
-    // set errorMessage;
-
+    if (!result) return;
+    if (result.errors) return dispatch(setError(result.errors));
     setSurveyData(result.data);
   };
 
@@ -56,6 +52,7 @@ export const IndexPage = () => {
     };
     const result = await fetchData(url, "POST", payload);
     if (!result) return;
+    if (result.errors) return dispatch(setError(result.errors));
     handleAfterSubmit(result);
   };
 
@@ -72,6 +69,8 @@ export const IndexPage = () => {
   };
 
   const handleOnChange = (questionId, value) => {
+    const result = value.replace(/[^A-Za-z0-9 ]/gi, "");
+
     let newCollectionOfAnswers = JSON.parse(
       JSON.stringify(collectionOfAnswers)
     );
@@ -80,7 +79,7 @@ export const IndexPage = () => {
     );
     newCollectionOfAnswers.push({
       questionId,
-      answer: value,
+      answer: result,
     });
     setCollectionOfAnswers(newCollectionOfAnswers);
   };
@@ -117,6 +116,12 @@ export const IndexPage = () => {
                   isRequired={question.required}
                   handleOnChange={handleOnChange}
                   questionId={question.questionId}
+                  value={(() => {
+                    const newValue = collectionOfAnswers.find(
+                      (answer) => answer.questionId === question.questionId
+                    )?.answer;
+                    return newValue || "";
+                  })()}
                 />
               </FlexContainer>
             );
