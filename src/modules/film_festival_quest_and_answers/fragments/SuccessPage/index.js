@@ -1,4 +1,3 @@
-import PropTypes from "prop-types";
 import React from "react";
 import { Description } from "shared/ui/Description/Description";
 import { FlexContainer } from "shared/ui/FlexContainer/FlexContainer";

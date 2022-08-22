@@ -12,12 +12,15 @@ export const FormInput = ({
   fullWidth,
   isRequired,
   questionId,
+  value,
 }) => {
   return (
     <FormControlStyled variant="standard" fullWidth={fullWidth}>
       <InputLabel htmlFor="input-with-icon-adornment">{label}</InputLabel>
       <Input
+        type="text"
         required={isRequired}
+        value={value}
         onChange={(e) => handleOnChange(questionId, e.target.value)}
         id="input-with-icon-adornment"
         startAdornment={
@@ -36,4 +39,5 @@ FormInput.propTypes = {
   handleOnChange: PropTypes.func,
   fullWidth: PropTypes.bool,
   isRequired: PropTypes.bool,
+  value: PropTypes.string,
 };

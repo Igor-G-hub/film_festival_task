@@ -5,7 +5,6 @@ import { res200, res500, res201 } from "./mockingResponses/responses";
 export const handlers = [
   rest.get("http://localhost:3000/api/v1/survey", (req, res, ctx) => {
     const isValidate = checkApiRequestValidation("GET", req);
-
     if (isValidate) {
       return res(ctx.status(200), ctx.json(res200));
     } else {

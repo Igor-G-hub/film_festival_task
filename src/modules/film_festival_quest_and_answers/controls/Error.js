@@ -5,12 +5,10 @@ import { useDispatch, useSelector } from "react-redux";
 import { ErrorMessage, ErrorContainer, ErrorTitle, ErrorText } from "./styles";
 import { deleteError, errorSelector } from "../redux";
 
-export const ErrorHandler = () => {
+export const Error = () => {
   const error = useSelector(errorSelector);
   const dispatch = useDispatch();
   const [isHover, setIsHover] = useState(false);
-
-  console.log("error u error handler", error);
 
   useEffect(() => {
     const time = setTimeout(() => {
@@ -37,21 +35,26 @@ export const ErrorHandler = () => {
   return reactDom.createPortal(
     <ErrorContainer>
       <AnimatePresence key="ErrorParent">
-        <ErrorMessage
-          onMouseEnter={() => setIsHover(true)}
-          onMouseLeave={() => setIsHover(false)}
-          variants={errorAnimations}
-          initial="initial"
-          animate="animate"
-          exit="exit"
-          style={{ zIndex: -index }}
-          key={indToNum}
-        >
-          <ErrorTitle>Err!</ErrorTitle>
-          <ErrorText>{err}</ErrorText>
-        </ErrorMessage>
+        {error?.map((err, index) => {
+          const indToNum = index.toString();
+          return (
+            <ErrorMessage
+              onMouseEnter={() => setIsHover(true)}
+              onMouseLeave={() => setIsHover(false)}
+              variants={errorAnimations}
+              initial="initial"
+              animate="animate"
+              exit="exit"
+              // style={{ zIndex: -index }}
+              key={index}
+            >
+              <ErrorTitle>{err.title}</ErrorTitle>
+              <ErrorText>{err.detail}</ErrorText>
+            </ErrorMessage>
+          );
+        })}
       </AnimatePresence>
     </ErrorContainer>,
-    document.getElementById("error")
+    document.getElementById("errors")
   );
 };
