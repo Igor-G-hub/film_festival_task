@@ -7,6 +7,12 @@ React 18.2.0
 
 Used Mock Service Worker v0.44.2
 
+Project flow on Github:
+
+    master──────────────────────────────────────────────│──master
+        └── develop───────────────────│───develop───────│
+                └── other branches────│
+
 To start the application run this commands:
 
 run npm or yarn install
